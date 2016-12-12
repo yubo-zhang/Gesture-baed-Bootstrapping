@@ -1,0 +1,32 @@
+import sys
+caffe_root = '/home/yuboz/caffe_det/caffe'
+sys.path.insert(0, caffe_root+ '/python')
+import caffe
+import surgery
+import test
+
+import numpy as np
+import os
+
+import setproctitle
+setproctitle.setproctitle(os.path.basename(os.getcwd()))
+#init
+caffe.set_device(0)
+caffe.set_mode_gpu()
+
+
+layer = 'prob1'
+image = 'data'
+result_dir = '/home/yuboz/caffe_det/caffe/result/output_image'
+txt_dir = '/home/yuboz/caffe_det/caffe/result/score.txt'
+test_num = 264
+
+test_str1 = '/home/yuboz/caffe_det/caffe/models/hand/VGG_VOC2012ext_iter_'
+test_str2 = '.caffemodel'
+step_size = 1000
+iteration = 1000
+for _ in range(25):
+    model = test_str1+str(iteration)+test_str2
+    test_net = caffe.Net('/home/yuboz/caffe_det/caffe/models/hand/VGG_VOC2012test.prototxt',model,caffe.TEST)
+    test.F1_measure(test_net,result_dir,test_num,layer,image ,iteration)
+    iteration += step_size

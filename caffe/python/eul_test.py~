@@ -1,0 +1,59 @@
+from __future__ import division
+import h5py
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+from PIL import Image
+import os
+from datetime import datetime
+import sys
+from scipy.sparse import csr_matrix
+import scipy.sparse.linalg as inv_tool
+import tables as tb
+from sklearn.covariance import GraphLassoCV, ledoit_wolf
+from sklearn.externals.joblib import Parallel, delayed
+from scipy.linalg import svd,diagsvd,eigvals,inv,norm
+import math
+caffe_root = '/home/yuboz/caffe_ts/caffe'  # this file should be run from {caffe_root}/examples (otherwise change this line)
+sys.path.insert(0, caffe_root + '/python')
+import caffe
+
+def F1_measure(test_net,result_dir,txt_dir,test_num,layer,image ,gt,iteration):
+	result = do_measure(test_net,result_dir,txt_dir,test_num,layer,image ,gt,iteration)
+
+def do_measure(test_net,result_dir,txt_dir,test_num,layer,image ,gt,iteration):
+	if save_dir:
+		if not (os.path.exists(save_dir)):
+			os.mkdir(save_dir)
+	for idx in range(dataset):
+		net.forward()
+		output_acc = net.blobs[layer].data[0].astype(np.float64)
+		print output_acc
+		output_data= net.blobs[image].data[0].astype(np.float64)
+		output_gt = net.blobs[gt].data[0].astype(np.float64)
+		t_l  = 0
+		t = 0
+		l = 0
+		l = gt_output.sum()
+		t = (output_data>0.5).sum()		
+		t_l = ((gt_output > 0) & (output1 > 0.5)).sum()
+		if l == 0:
+			print "there is no label ==1 in image"
+			continue
+		if t == 0:
+			print "there is no detection ==1 in image"
+			continue
+		r = float(t_l)/float(l)
+		p = float(t_l)/float(t)
+		if r+p == 0:
+			print "recall+precision ==0"
+			continue
+		F1 = 2*r*p/(r+p)
+		total+=F1
+		txt_file.write(str(total))
+		txt_file.write("\n")
+	txt_file.write('\n')
+	txt_file.write(str(total/(idx+1)))
+	txt_file.write("\n")
+	txt_file.close()
+

@@ -1,0 +1,17 @@
+net: "/home/yuboz/CVPR_Bootstrapping/GBN/caffe/models/appearance/VGG_VOC2012ext1.prototxt"
+test_iter: 500
+test_interval: 200
+eval_type: "segmentation"
+display: 50
+average_loss: 20
+lr_policy: "poly"
+power: 0.9
+base_lr: 1e-6
+momentum: 0.9
+iter_size: 8
+max_iter: 8000
+weight_decay: 0.0001
+snapshot: 50
+snapshot_prefix: "/home/yuboz/CVPR_Bootstrapping/GBN/caffe/models/appearance/VGG_VOC2012ext"
+test_initialization: false
+debug_info: false

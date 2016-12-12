@@ -1,0 +1,40 @@
+import sys
+caffe_root = '/home/yuboz/caffe_det/caffe'
+sys.path.insert(0, caffe_root+ '/python')
+import caffe
+import surgery
+import test
+
+import numpy as np
+import os
+
+import setproctitle
+setproctitle.setproctitle(os.path.basename(os.getcwd()))
+#init
+caffe.set_device(2)
+caffe.set_mode_gpu()
+
+argument = sys.argv
+
+weights = '/home/yuboz/caffe_det/caffe/models/hand2/VGG_VOC2012ext.caffemodel'
+solve = '/home/yuboz/caffe_det/caffe/models/hand2/VGG_VOC2012ext_solver'+argument[1]+'.prototxt'
+solver = caffe.SGDSolver(solve)
+solver.net.copy_from(weights)
+
+layer = 'prob1'
+image = 'data'
+gt = 'label'
+result_dir = '/home/yuboz/caffe_det/caffe/result4/output_image'+argument[1]
+txt_dir = '/home/yuboz/caffe_det/caffe/result4/score'+argument[1]+'.txt'
+test_num = 177
+
+test_str1 = '/home/yuboz/caffe_det/caffe/models/hand2/VGG_VOC2012ext'+argument[1]+'_iter_'
+test_str2 = '.caffemodel'
+step_size = 100
+iteration = 100
+for _ in range(40):
+	solver.step(step_size)
+	model = test_str1+str(iteration)+test_str2
+	test_net = caffe.Net('/home/yuboz/caffe_det/caffe/models/hand2/VGG_VOC2012test.prototxt',model,caffe.TEST)
+	test.F1_measure(test_net,result_dir,txt_dir,test_num,layer,image ,gt,iteration)
+	iteration += step_size

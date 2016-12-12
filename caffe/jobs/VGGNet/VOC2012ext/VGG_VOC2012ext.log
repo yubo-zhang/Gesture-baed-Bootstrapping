@@ -1,0 +1,36 @@
+I0719 10:29:08.953586 14104 caffe.cpp:116] Use GPU with device ID 0
+I0719 10:29:09.345715 14104 caffe.cpp:124] Starting Optimization
+I0719 10:29:09.345804 14104 solver.cpp:32] Initializing solver from parameters: 
+base_lr: 1e-08
+display: 20
+max_iter: 20000
+lr_policy: "poly"
+power: 0.9
+momentum: 0.9
+weight_decay: 0.0005
+snapshot: 2000
+snapshot_prefix: "models/hand/VGG_VOC2012ext"
+debug_info: false
+net: "models/hand/VGG_VOC2012ext.prototxt"
+test_initialization: false
+average_loss: 20
+iter_size: 8
+eval_type: "segmentation"
+I0719 10:29:09.345832 14104 solver.cpp:70] Creating training net from net file: models/hand/VGG_VOC2012ext.prototxt
+[libprotobuf ERROR google/protobuf/text_format.cc:245] Error parsing text-format caffe.NetParameter: 33:5: Non-repeated field "name" is specified multiple times.
+F0719 10:29:09.345978 14104 upgrade_proto.cpp:936] Check failed: ReadProtoFromTextFile(param_file, param) Failed to parse NetParameter file: models/hand/VGG_VOC2012ext.prototxt
+*** Check failure stack trace: ***
+    @     0x7f712e76fdaa  (unknown)
+    @     0x7f712e76fce4  (unknown)
+    @     0x7f712e76f6e6  (unknown)
+    @     0x7f712e772687  (unknown)
+    @     0x7f712ebe75fe  caffe::ReadNetParamsFromTextFileOrDie()
+    @     0x7f712ec0a7e2  caffe::Solver<>::InitTrainNet()
+    @     0x7f712ec0b943  caffe::Solver<>::Init()
+    @     0x7f712ec0bb16  caffe::Solver<>::Solver()
+    @           0x40cfd0  caffe::GetSolver<>()
+    @           0x407203  train()
+    @           0x4057b5  main
+    @     0x7f712dc81f45  (unknown)
+    @           0x405dcb  (unknown)
+    @              (nil)  (unknown)
