@@ -1,5 +1,7 @@
 # Gesture-baed-Bootstrapping
-The GBN folder contains the codes and caffe model for taining person specific hand detector.
+The GBN folder contains the codes and caffe model for taining person specific hand detector in paper "Gesture-based bootstrapping for egosentric hand segmentation", the paper is available on arxiv: http://arxiv.org/abs/1612.02889.
+
+Yubo Zhang, Vishnu Naresh Boddeti, Kris M. Kitani, “Gesture-based Bootstrapping for Egocentric Hand Segmentation” Submitted to Computer Vision and Pattern Recognition CVPR2017
 
 The process takes an input video [in the form of MP4, AVI, MOV, WMV] and outputs a hand detecor for the user in the video. 
 
